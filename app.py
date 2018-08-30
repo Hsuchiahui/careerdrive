@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 
+import os
+
 from flask import Flask
 from flask import request
 from flask import redirect
@@ -9,11 +11,22 @@ from oauth2client.client import OAuth2WebServerFlow
 from googleapiclient.discovery import build
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///UserRegisters.db'
+app.config.setdefault('SQLALCHEMY_TRACK_MODIFICATIONS', True)
 
-flow = OAuth2WebServerFlow(client_id='',
-        client_secret='',
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+
+class UserRegister(db.Model):
+    __tablename__ = 'UserRegisters'
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    email = db.Column(db.String(80), unique=True, nullable=True)
+
+flow = OAuth2WebServerFlow(client_id=os.environ['OAUTH_CLIENT_ID'],
+        client_secret=os.environ['OAUTH_CLIENT_SECRET'],
         scope='https://www.googleapis.com/auth/userinfo.email',
-        redirect_uri='')
+        redirect_uri='https://careerdrive.herokuapp.com/oauth2callback')
 
 
 @app.route('/', methods=['GET'])
@@ -28,5 +41,3 @@ def oauth_callback():
     service = build('oauth2', 'v2', credentials=credentials)
     return Response(service.userinfo().get().execute())
 
-if __name__ == '__main__' :
-    app.run(host = 'hmkrl.com', port = '8000', debug = False)
