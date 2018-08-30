@@ -11,18 +11,19 @@ from oauth2client.client import OAuth2WebServerFlow
 from googleapiclient.discovery import build
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///UserRegisters.db'
-app.config.setdefault('SQLALCHEMY_TRACK_MODIFICATIONS', True)
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///UserRegisters.db'
+#app.config.setdefault('SQLALCHEMY_TRACK_MODIFICATIONS', True)
 
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
+#db = SQLAlchemy(app)
+#migrate = Migrate(app, db)
 
+'''
 class UserRegister(db.Model):
     __tablename__ = 'UserRegisters'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(80), unique=True, nullable=True)
-
+''''
 flow = OAuth2WebServerFlow(client_id=os.environ['OAUTH_CLIENT_ID'],
         client_secret=os.environ['OAUTH_CLIENT_SECRET'],
         scope='https://www.googleapis.com/auth/userinfo.email',
