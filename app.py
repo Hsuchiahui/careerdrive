@@ -40,5 +40,7 @@ def oauth_callback():
     auth_code = request.args.get('code')
     credentials = flow.step2_exchange(auth_code)
     service = build('oauth2', 'v2', credentials=credentials)
-    return Response(service.userinfo().get().execute())
+    userinfo = service.userinfo().get().execute()
+    print(userinfo)
+    return Response(userinfo['email'])
 
