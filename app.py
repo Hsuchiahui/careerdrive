@@ -23,7 +23,7 @@ class UserRegister(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(80), unique=True, nullable=True)
-''''
+'''
 flow = OAuth2WebServerFlow(client_id=os.environ['OAUTH_CLIENT_ID'],
         client_secret=os.environ['OAUTH_CLIENT_SECRET'],
         scope='https://www.googleapis.com/auth/userinfo.email',
