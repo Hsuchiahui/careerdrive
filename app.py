@@ -27,7 +27,7 @@ class UserRegister(db.Model):
 flow = OAuth2WebServerFlow(client_id=os.environ['OAUTH_CLIENT_ID'],
         client_secret=os.environ['OAUTH_CLIENT_SECRET'],
         scope='https://www.googleapis.com/auth/userinfo.email',
-        redirect_uri='https://careerdrive.herokuapp.com/oauth2callback')
+        redirect_uri='https://career-drive.herokuapp.com/oauth2callback')
 
 
 @app.route('/', methods=['GET'])
